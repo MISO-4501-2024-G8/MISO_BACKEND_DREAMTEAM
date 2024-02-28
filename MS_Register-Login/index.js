@@ -68,6 +68,10 @@ app.get('/healthcheck', (req, res) => {
   res.status(200).json({ message: 'OK' });
 });
 
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'OK MS REGISTER LOGIN CORRIENDO' });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor iniciado en el puerto ${PORT}`);
