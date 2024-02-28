@@ -42,7 +42,7 @@ app.post('/usuarios', async (req, res) => {
   } catch (error) {
     console.error(error);
     if(error.code === 'ER_SIGNAL_EXCEPTION' && error.sqlState === '45000') {
-      res.status(400).json({ message: 'El email ya está registrado' });
+      res.status(400).json({ message: error.sqlMessage });
     }else{
       res.status(500).json({ message: 'Error interno del servidor' });
     }
