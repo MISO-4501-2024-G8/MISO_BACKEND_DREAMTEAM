@@ -1,0 +1,63 @@
+{
+    "family": "task_ms_registerlogin",
+    "containerDefinitions": [
+        {
+            "name": "contenedor_ms_registerlogin",
+            "image": "public.ecr.aws/u7g2q2l0/ms_register_login:latest", 
+            "memory": 512,
+            "cpu": 256,
+            "essential": true,
+            "portMappings": [
+                {
+                    "containerPort": 3000,
+                    "hostPort": 3000
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/task_ms_registerlogin",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "healthCheck": {
+                "command": [
+                    "CMD-SHELL",
+                    "curl --location 'http://localhost:3000/healthcheck' || exit 1"
+                ],
+                "interval": 30,
+                "timeout": 5,
+                "retries": 3
+            },
+            "environment": [
+                {
+                    "name": "DB_HOST",
+                    "value": "dbuser.cvweuasge1pc.us-east-1.rds.amazonaws.com"
+                },
+                {
+                    "name": "DB_USER",
+                    "value": "admin"
+                },
+                {
+                    "name": "DB_PASSWORD",
+                    "value": "123456789"
+                },
+                {
+                    "name": "DB_DATABASE",
+                    "value": "db_user"
+                }
+            ]
+        }
+    ],
+    "taskRoleArn": "arn:aws:iam::905418247517:role/taskRole",
+    "executionRoleArn": "arn:aws:iam::905418247517:role/taskRole",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512"
+}
