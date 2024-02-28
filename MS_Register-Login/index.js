@@ -1,18 +1,19 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
 const app = express();
 const secret = 'MISOG8';
 
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 
 // Configuración de la conexión a la base de datos
 const pool = mysql.createPool({
-  host: 'dbuser.cvweuasge1pc.us-east-1.rds.amazonaws.com',
-  user: 'admin',
-  password: '123456789',
-  database: 'db_user'
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE
 });
 
 // Ruta para el login de usuario
