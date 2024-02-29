@@ -1,37 +1,19 @@
 {
-    "family": "task_ms_registerlogin",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:905418247517:task-definition/task_ms_registerlogin:4",
     "containerDefinitions": [
         {
             "name": "contenedor_ms_registerlogin",
-            "image": "public.ecr.aws/u7g2q2l0/ms_register_login:latest", 
-            "memory": 512,
+            "image": "public.ecr.aws/u7g2q2l0/ms_register_login:latest",
             "cpu": 256,
-            "essential": true,
+            "memory": 512,
             "portMappings": [
                 {
                     "containerPort": 3000,
-                    "hostPort": 3000
+                    "hostPort": 3000,
+                    "protocol": "tcp"
                 }
             ],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/task_ms_registerlogin",
-                    "awslogs-region": "us-east-1",
-                    "awslogs-stream-prefix": "ecs"
-                },
-                "secretOptions": []
-            },
-            "healthCheck": {
-                "command": [
-                    "CMD-SHELL",
-                    "curl --location 'http://localhost:3000/healthcheck' || exit 1"
-                ],
-                "interval": 30,
-                "timeout": 5,
-                "retries": 3
-            },
+            "essential": true,
             "environment": [
                 {
                     "name": "DB_HOST",
@@ -42,22 +24,83 @@
                     "value": "admin"
                 },
                 {
-                    "name": "DB_PASSWORD",
-                    "value": "123456789"
-                },
-                {
                     "name": "DB_DATABASE",
                     "value": "db_user"
+                },
+                {
+                    "name": "DB_PASSWORD",
+                    "value": "123456789"
                 }
-            ]
+            ],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/task_ms_registerlogin",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "healthCheck": {
+                "command": [
+                    "CMD-SHELL",
+                    "curl --location 'http://localhost:3000/healthcheck' || exit 1"
+                ],
+                "interval": 30,
+                "timeout": 5,
+                "retries": 3
+            }
         }
     ],
+    "family": "task_ms_registerlogin",
     "taskRoleArn": "arn:aws:iam::905418247517:role/taskRole",
     "executionRoleArn": "arn:aws:iam::905418247517:role/taskRole",
     "networkMode": "awsvpc",
+    "revision": 4,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.24"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.container-health-check"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
     "requiresCompatibilities": [
         "FARGATE"
     ],
     "cpu": "256",
-    "memory": "512"
+    "memory": "512",
+    "registeredAt": "2024-02-28T22:36:40.468Z",
+    "registeredBy": "arn:aws:iam::905418247517:root",
+    "tags": []
 }
