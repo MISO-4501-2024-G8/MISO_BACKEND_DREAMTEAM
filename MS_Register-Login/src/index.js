@@ -1,13 +1,18 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
-//const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
-require('dotenv').config();
+
+
+const dotenv = require('dotenv');
+const path = require('path');
+dotenv.config({ path: `.env.${process.env.NODE_ENVIRONMENT}` });
+
+
 
 const app = express();
 const secret = 'MISOG8';
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 const expirationTIme = 60 * 1000;
 
 app.use(bodyParser.json());

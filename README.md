@@ -47,3 +47,10 @@ puerto: 3306
 user: admin
 psw: 123456789
 ```
+
+Ya tenemos ambientes diferentes
+```bash
+ npm run prod --corre Produccion
+ npm run dev --corre desarrollo
+
+```
