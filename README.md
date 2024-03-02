@@ -39,3 +39,10 @@ aws ecr-public get-login-password --region us-east-1 | docker login --username A
 docker pull public.ecr.aws/u7g2q2l0/ms_register_login:latest
 docker run -p 3000:3000 -d public.ecr.aws/u7g2q2l0/ms_register_login:latest
 ```
+
+Conecatrse a la base de datos
+
+host: dbuser.cvweuasge1pc.us-east-1.rds.amazonaws.com
+puerto: 3306
+user: admin
+psw: 123456789
