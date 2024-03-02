@@ -13,7 +13,7 @@ dotenv.config({ path: `.env.${process.env.NODE_ENVIRONMENT}` });
 const app = express();
 const secret = 'MISOG8';
 const PORT = process.env.PORT;
-const expirationTIme = 60 * 1000;
+const expirationTIme = 600 * 1000;
 
 app.use(bodyParser.json());
 
@@ -40,7 +40,7 @@ app.post('/login', async (req, res) => {
     const [rows] = await connection.query(`CALL LoginUsuario('${email}', '${password}', '${token}')`);
     connection.release();
    //res.json(rows[0][0]);
-   //res.send({token})
+    res.status(200).json({ message: 'Usuario Ingreso Correctamante', token: token });
     res.json({token});
   } catch (error) {
     console.error(error);
@@ -54,9 +54,15 @@ app.post('/register', async (req, res) => {
   try {
     const { nombre, email, password } = req.body;
     const connection = await pool.getConnection();
-    const [rows] = await connection.query(`CALL InsertarUsuario('${nombre}', '${email}', '${password}', NOW(), '${secret}')`);
+    const token = jwt.sign({
+      email,
+      password,
+      exp: Date.now() + expirationTIme
+    }, process.env.TOKEN_SECRET)
+    const [rows] = await connection.query(`CALL InsertarUsuario('${nombre}', '${email}', '${password}', NOW(), '${token}')`);
     connection.release();
-    res.json({ message: 'Usuario insertado correctamente' });
+    res.status(200).json({ message: 'Usuario insertado correctamente', token: token });
+
   } catch (error) {
     console.error(error);
     if(error.code === 'ER_SIGNAL_EXCEPTION' && error.sqlState === '45000') {
