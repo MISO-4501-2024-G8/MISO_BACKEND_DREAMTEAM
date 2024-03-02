@@ -1,8 +1,6 @@
 # MISO_BACKEND_DREAMTEAM
 Proyecto Backend de Proyecto Final 1 y Proyecto Final 2
 
-
-
 ## MS_Register-Login
 
 ### Descripción
@@ -17,6 +15,7 @@ Microservicio encargado de la gestión de usuarios, registro, login.
 ```
 
 Instalar AWS Cli
+
 ```bash
 brew install awscli
 aws --version
@@ -41,6 +40,7 @@ docker run -p 3000:3000 -d public.ecr.aws/u7g2q2l0/ms_register_login:latest
 ```
 
 Conecatrse a la base de datos
+
 ```bash
 host: dbuser.cvweuasge1pc.us-east-1.rds.amazonaws.com
 puerto: 3306
@@ -48,9 +48,9 @@ user: admin
 psw: 123456789
 ```
 
-Ya tenemos ambientes diferentes
-```bash
- npm run prod --corre Produccion
- npm run dev --corre desarrollo
+Diferentes ambientes
 
+```bash
+npm run prod --corre Produccion
+npm run dev --corre desarrollo
 ```
