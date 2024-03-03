@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "816b1406-9496-4531-a274-084edcbfe8a3",
+		"name": "MS_RegisterLogin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33278642",
+		"_collection_link": "https://sportapp-g8-miso.postman.co/workspace/Team-Workspace~6e388d27-6876-4808-8594-901b4032c812/collection/33278642-816b1406-9496-4531-a274-084edcbfe8a3?action=share&source=collection_link&creator=33278642"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (typeof responseBody === 'undefined') {",
+							"    var responseBody = pm.response.json();",
+							"}",
+							"if(typeof responseBody === 'string'){",
+							"    const bodyParser = JSON.parse(responseBody)",
+							"    const token = bodyParser.token;",
+							"    if (token){",
+							"        pm.globals.set(\"user_token\", token);",
+							"    }",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"pepe8@sportapp.com\",\n    \"password\": \"123456789\"\n}"
+				},
+				"url": {
+					"raw": "{{API_URL}}/login",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar_Usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (typeof responseBody === 'undefined') {",
+							"    var responseBody = pm.response.json();",
+							"}",
+							"if(typeof responseBody === 'string'){",
+							"    const bodyParser = JSON.parse(responseBody)",
+							"    const token = bodyParser.token;",
+							"    if (token){",
+							"        pm.globals.set(\"user_token\", token);",
+							"    }",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\":\"pepe\",\n    \"email\": \"pepe7@sportapp.com\",\n    \"password\": \"123456789\"\n}"
+				},
+				"url": {
+					"raw": "http://loadbalancerms-1349930320.us-east-1.elb.amazonaws.com/register",
+					"protocol": "http",
+					"host": [
+						"loadbalancerms-1349930320",
+						"us-east-1",
+						"elb",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Usuarios",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_URL}}/usuarios",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HealthCheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_URL}}/healthcheck",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
