@@ -96,14 +96,10 @@ app.get('/usuarios', async (req, res) => {
 });
 
 app.get('/healthcheck', (req, res) => {
-  let textoFechaHora = (new Date()).toLocaleString();
-  console.log(`HEALTH CHECK ${textoFechaHora}`);
   res.status(200).json({ message: 'OK' });
 });
 
 app.get('/', (req, res) => {
-  let textoFechaHora = (new Date()).toLocaleString();
-  console.log(`BASE SERVER HOST ${textoFechaHora}`);
   res.status(200).json({ message: 'OK MS REGISTER LOGIN CORRIENDO' });
 });
 
