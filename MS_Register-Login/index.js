@@ -78,7 +78,12 @@ app.get('/usuarios', async (req, res) => {
   console.log(`LIST_USERS ${textoFechaHora}`);
   try {
     // Bearer token
-    const token = req.headers.authorization.split(' ')[1];
+    const auth = req.headers.authorization;
+    console.log(auth);
+    if (!auth) {
+      return res.status(401).send({error: "No token provided"})
+    }
+    const token = auth.split(' ')[1];
     const payLoad = jwt.verify(token, process.env.TOKEN_SECRET)
     if (Date.now() > payLoad.exp){
       return res.status(401).send({error: "Token expired"})
