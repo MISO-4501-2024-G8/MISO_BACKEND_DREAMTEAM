@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "set NODE_ENVIRONMENT=development&& node ./src/index.js",
-    "prod": "set NODE_ENVIRONMENT=production&& node ./src/index.js"
+    "dev": "NODE_ENVIRONMENT=development node index.js",
+    "prod": "NODE_ENVIRONMENT=production node index.js"
   },
   "keywords": [],
   "author": "",

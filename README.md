@@ -39,7 +39,7 @@ docker pull public.ecr.aws/u7g2q2l0/ms_register_login:latest
 docker run -p 3000:3000 -d public.ecr.aws/u7g2q2l0/ms_register_login:latest
 ```
 
-Conecatrse a la base de datos
+Conectarse a la base de datos
 
 ```bash
 host: dbuser.cvweuasge1pc.us-east-1.rds.amazonaws.com
@@ -50,7 +50,12 @@ psw: 123456789
 
 Diferentes ambientes
 
+correr Produccion:
 ```bash
-npm run prod --corre Produccion
-npm run dev --corre desarrollo
+npm run prod
+```
+
+correr Desarrollo:
+```bash
+npm run dev
 ```

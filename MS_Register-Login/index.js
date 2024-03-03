@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 
 const dotenv = require('dotenv');
 const path = require('path');
+console.log(`.env.${process.env.NODE_ENVIRONMENT}`);
 dotenv.config({ path: `.env.${process.env.NODE_ENVIRONMENT}` });
 
 
@@ -27,7 +28,8 @@ const pool = mysql.createPool({
 
 // Ruta para el login de usuario
 app.post('/login', async (req, res) => {
-  console.log("LOGIN");
+  let textoFechaHora = (new Date()).toLocaleString();
+  console.log(`LOGIN ${textoFechaHora}`);
   try {
     const { email, password } = req.body;
     const connection = await pool.getConnection();
@@ -36,12 +38,9 @@ app.post('/login', async (req, res) => {
       password,
       exp: Date.now() + expirationTIme
     }, process.env.TOKEN_SECRET)
-    
-    const [rows] = await connection.query(`CALL LoginUsuario('${email}', '${password}', '${token}')`);
+    await connection.query(`CALL LoginUsuario('${email}', '${password}', '${token}')`);
     connection.release();
-   //res.json(rows[0][0]);
     res.status(200).json({ message: 'Usuario Ingreso Correctamante', token: token });
-    res.json({token});
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error interno del servidor' });
@@ -50,7 +49,8 @@ app.post('/login', async (req, res) => {
 
 // Ruta para insertar un nuevo usuario
 app.post('/register', async (req, res) => {
-  console.log("REGISTER");
+  let textoFechaHora = (new Date()).toLocaleString();
+  console.log(`REGISTER ${textoFechaHora}`);
   try {
     const { nombre, email, password } = req.body;
     const connection = await pool.getConnection();
@@ -62,7 +62,6 @@ app.post('/register', async (req, res) => {
     const [rows] = await connection.query(`CALL InsertarUsuario('${nombre}', '${email}', '${password}', NOW(), '${token}')`);
     connection.release();
     res.status(200).json({ message: 'Usuario insertado correctamente', token: token });
-
   } catch (error) {
     console.error(error);
     if(error.code === 'ER_SIGNAL_EXCEPTION' && error.sqlState === '45000') {
@@ -75,7 +74,8 @@ app.post('/register', async (req, res) => {
 
 // Ruta para obtener la lista de usuarios
 app.get('/usuarios', async (req, res) => {
-  console.log("LIST_USERS");
+  let textoFechaHora = (new Date()).toLocaleString();
+  console.log(`LIST_USERS ${textoFechaHora}`);
   try {
     // Bearer token
     const token = req.headers.authorization.split(' ')[1];
@@ -96,10 +96,14 @@ app.get('/usuarios', async (req, res) => {
 });
 
 app.get('/healthcheck', (req, res) => {
+  let textoFechaHora = (new Date()).toLocaleString();
+  console.log(`HEALTH CHECK ${textoFechaHora}`);
   res.status(200).json({ message: 'OK' });
 });
 
 app.get('/', (req, res) => {
+  let textoFechaHora = (new Date()).toLocaleString();
+  console.log(`BASE SERVER HOST ${textoFechaHora}`);
   res.status(200).json({ message: 'OK MS REGISTER LOGIN CORRIENDO' });
 });
 
