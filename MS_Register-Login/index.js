@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 console.log(`.env.${process.env.NODE_ENVIRONMENT}`);
 dotenv.config({ path: `.env.${process.env.NODE_ENVIRONMENT}` });
+console.log(process.env.DB_HOST);
 
 
 
