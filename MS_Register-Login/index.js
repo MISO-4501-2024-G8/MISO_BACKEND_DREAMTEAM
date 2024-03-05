@@ -38,7 +38,7 @@ app.post('/login', async (req, res) => {
       password,
       exp: Date.now() + expirationTIme
     }, process.env.TOKEN_SECRET)
-    await connection.query(`CALL LoginUsuario('${email}', '${password}', '${token}')`);
+    await connection.query(`CALL LoginUsuario('${email}', '${password}', '${secret}')`);
     connection.release();
     res.status(200).json({ message: 'Usuario Ingreso Correctamante', token: token });
   } catch (error) {
@@ -59,7 +59,7 @@ app.post('/register', async (req, res) => {
       password,
       exp: Date.now() + expirationTIme
     }, process.env.TOKEN_SECRET)
-    const [rows] = await connection.query(`CALL InsertarUsuario('${nombre}', '${email}', '${password}', NOW(), '${token}')`);
+    const [rows] = await connection.query(`CALL InsertarUsuario('${nombre}', '${email}', '${password}', NOW(), '${secret}')`);
     connection.release();
     res.status(200).json({ message: 'Usuario insertado correctamente', token: token });
   } catch (error) {
