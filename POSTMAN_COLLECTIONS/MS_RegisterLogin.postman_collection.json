@@ -40,7 +40,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"pepe8@sportapp.com\",\n    \"password\": \"123456789\"\n}"
+					"raw": "{\n    \"email\": \"pepe11@sportapp.com\",\n    \"password\": \"123456789\"\n}"
 				},
 				"url": {
 					"raw": "{{API_URL}}/login",
@@ -87,17 +87,12 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"nombre\":\"pepe\",\n    \"email\": \"pepe7@sportapp.com\",\n    \"password\": \"123456789\"\n}"
+					"raw": "{\n    \"nombre\":\"pepe\",\n    \"email\": \"pepe14@sportapp.com\",\n    \"password\": \"123456789\"\n}"
 				},
 				"url": {
-					"raw": "http://loadbalancerms-1349930320.us-east-1.elb.amazonaws.com/register",
-					"protocol": "http",
+					"raw": "{{API_URL}}/register",
 					"host": [
-						"loadbalancerms-1349930320",
-						"us-east-1",
-						"elb",
-						"amazonaws",
-						"com"
+						"{{API_URL}}"
 					],
 					"path": [
 						"register"
