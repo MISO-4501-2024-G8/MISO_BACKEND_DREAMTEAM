@@ -51,11 +51,20 @@ psw: 123456789
 Diferentes ambientes
 
 correr Produccion:
+
 ```bash
 npm run prod
 ```
 
 correr Desarrollo:
+
 ```bash
 npm run dev
+```
+
+Credencilales a AWS
+
+```bash
+correo: sportappg8@gmail.com
+psw: DreamTeam123*
 ```

@@ -5,14 +5,12 @@ const bodyParser = require('body-parser');
 
 
 const dotenv = require('dotenv');
-const path = require('path');
 console.log(`.env.${process.env.NODE_ENVIRONMENT}`);
 dotenv.config({ path: `.env.${process.env.NODE_ENVIRONMENT}` });
 
 
 
 const app = express();
-const secret = 'MISOG8';
 const PORT = process.env.PORT;
 const expirationTIme = 600 * 1000;
 
