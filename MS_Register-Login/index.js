@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 console.log(`.env.${process.env.NODE_ENVIRONMENT}`);
 dotenv.config({ path: `.env.${process.env.NODE_ENVIRONMENT}` });
+console.log(process.env.DB_HOST);
 
 
 
@@ -36,8 +37,9 @@ app.post('/login', async (req, res) => {
       password,
       exp: Date.now() + expirationTIme
     }, process.env.TOKEN_SECRET)
-    await connection.query(`CALL LoginUsuario('${email}', '${password}', '${token}')`);
+    await connection.query(`CALL LoginUsuario('${email}', '${password}', '${secret}')`);
     connection.release();
+    console.log('LOGIN REALIZADO');
     res.status(200).json({ message: 'Usuario Ingreso Correctamante', token: token });
   } catch (error) {
     console.error(error);
@@ -57,8 +59,9 @@ app.post('/register', async (req, res) => {
       password,
       exp: Date.now() + expirationTIme
     }, process.env.TOKEN_SECRET)
-    const [rows] = await connection.query(`CALL InsertarUsuario('${nombre}', '${email}', '${password}', NOW(), '${token}')`);
+    const [rows] = await connection.query(`CALL InsertarUsuario('${nombre}', '${email}', '${password}', NOW(), '${secret}')`);
     connection.release();
+    console.log('USUARIO INSERTADO');
     res.status(200).json({ message: 'Usuario insertado correctamente', token: token });
   } catch (error) {
     console.error(error);
@@ -90,6 +93,7 @@ app.get('/usuarios', async (req, res) => {
       const connection = await pool.getConnection();
       const [rows] = await connection.query("SELECT * FROM usuario");
       connection.release();
+      console.log('USUARIOS LISTADOS');
       res.json(rows);
     }   
   } catch (error) {
