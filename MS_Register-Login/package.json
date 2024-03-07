@@ -7,7 +7,8 @@
     "start": "node ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_ENVIRONMENT=development node index.js",
-    "prod": "NODE_ENVIRONMENT=production node index.js"
+    "prod": "NODE_ENVIRONMENT=production node index.js",
+    "primary": "NODE_ENVIRONMENT=production node primary.js"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +19,8 @@
     "jsonwebtoken": "9.0.2",
     "mysql2": "^3.9.2",
     "sharp": "^0.33.2"
+  },
+  "devDependencies": {
+    "loadtest": "^5.2.0"
   }
 }

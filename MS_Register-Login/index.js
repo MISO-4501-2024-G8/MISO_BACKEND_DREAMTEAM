@@ -2,16 +2,11 @@ const express = require('express');
 const mysql = require('mysql2/promise');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
-
-
 const dotenv = require('dotenv');
-console.log(`.env.${process.env.NODE_ENVIRONMENT}`);
 dotenv.config({ path: `.env.${process.env.NODE_ENVIRONMENT}` });
-console.log(process.env.DB_HOST);
-
-
 
 const app = express();
+const secret = 'MISOG8';
 const PORT = process.env.PORT;
 const expirationTIme = 600 * 1000;
 
@@ -19,6 +14,7 @@ app.use(bodyParser.json());
 
 // Configuración de la conexión a la base de datos
 const pool = mysql.createPool({
+  connectionLimit: 100,
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -37,8 +33,12 @@ app.post('/login', async (req, res) => {
       password,
       exp: Date.now() + expirationTIme
     }, process.env.TOKEN_SECRET)
-    await connection.query(`CALL LoginUsuario('${email}', '${password}', '${secret}')`);
+    const [rows] = await connection.query(`CALL LoginUsuario('${email}', '${password}', '${secret}')`);
     connection.release();
+    if (rows && rows[0] && rows[0][0] && rows[0][0].error) {
+      console.log('ERROR LOGIN');
+      return res.status(400).json({ message: rows[0][0].error });
+    }
     console.log('LOGIN REALIZADO');
     res.status(200).json({ message: 'Usuario Ingreso Correctamante', token: token });
   } catch (error) {
@@ -64,10 +64,10 @@ app.post('/register', async (req, res) => {
     console.log('USUARIO INSERTADO');
     res.status(200).json({ message: 'Usuario insertado correctamente', token: token });
   } catch (error) {
-    console.error(error);
-    if(error.code === 'ER_SIGNAL_EXCEPTION' && error.sqlState === '45000') {
+    console.error('ERROR REGISTER');
+    if (error.code === 'ER_SIGNAL_EXCEPTION' && error.sqlState === '45000') {
       res.status(400).json({ message: error.sqlMessage });
-    }else{
+    } else {
       res.status(500).json({ message: 'Error interno del servidor' });
     }
   }
@@ -82,20 +82,20 @@ app.get('/usuarios', async (req, res) => {
     const auth = req.headers.authorization;
     console.log(auth);
     if (!auth) {
-      return res.status(401).send({error: "No token provided"})
+      return res.status(401).send({ error: "No token provided" })
     }
     const token = auth.split(' ')[1];
     const payLoad = jwt.verify(token, process.env.TOKEN_SECRET)
-    if (Date.now() > payLoad.exp){
-      return res.status(401).send({error: "Token expired"})
+    if (Date.now() > payLoad.exp) {
+      return res.status(401).send({ error: "Token expired" })
     }
-    else{
+    else {
       const connection = await pool.getConnection();
       const [rows] = await connection.query("SELECT * FROM usuario");
       connection.release();
       console.log('USUARIOS LISTADOS');
       res.json(rows);
-    }   
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error interno del servidor' });
@@ -110,7 +110,11 @@ app.get('/', (req, res) => {
   res.status(200).json({ message: 'OK MS REGISTER LOGIN CORRIENDO' });
 });
 
-
 app.listen(PORT, () => {
+  console.log('------------------------------------------');
   console.log(`Servidor iniciado en el puerto ${PORT}`);
+  console.log(`ENV: ${process.env.NODE_ENVIRONMENT}`);
+  console.log('DB: ' + process.env.DB_HOST);
+  console.log(`Worker PID: ${process.pid}`);
+  console.log('------------------------------------------');
 });
