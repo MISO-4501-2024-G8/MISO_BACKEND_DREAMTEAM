@@ -72,6 +72,7 @@ psw: DreamTeam123*
 Correr pruebas de carga:
 ```bash
 npx loadtest -n 1200 -c 400 -k -T 'application/json' -P '{"email": "pepe11@sportapp.com", "password": "123456789"}' http://localhost:3000/login
+npx loadtest -n 1200 -c 400 -k -T 'application/json' -P '{"email": "pepe11@sportapp.com", "password": "123456789"}' https://g7o4mxf762.execute-api.us-east-1.amazonaws.com/prod/login
 ```
 
 
