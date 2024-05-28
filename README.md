@@ -62,13 +62,6 @@ correr Desarrollo:
 npm run dev
 ```
 
-Credencilales a AWS
-
-```bash
-correo: sportappg8@gmail.com
-psw: DreamTeam123*
-```
-
 Correr pruebas de carga:
 ```bash
 npx loadtest -n 1200 -c 400 -k -T 'application/json' -P '{"email": "elpepe@sportapp.com", "password": "123456789"}' http://localhost:3000/login
